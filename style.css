@@ -1,0 +1,16 @@
+body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.grid {
+  display: grid;
+  width: 500px;
+  height: 500px;
+  background-color: black;
+  user-select: none;
+}
