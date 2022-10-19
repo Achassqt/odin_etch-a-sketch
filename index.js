@@ -1,8 +1,10 @@
 const DEFAULT_COLOR = "black";
 const DEFAULT_MODE = "color";
+const DEFAULT_SIZE = "16";
 
 let currentColor = DEFAULT_COLOR;
 let currentMode = DEFAULT_MODE;
+let currentSize = DEFAULT_SIZE;
 
 const grid = document.getElementById("grid");
 const clearBtn = document.getElementById("clear-btn");
@@ -10,12 +12,16 @@ const colorPicker = document.getElementById("color-picker");
 const colorBtn = document.getElementById("color-btn");
 const eraserBtn = document.getElementById("eraser-btn");
 const randomColorBtn = document.getElementById("random_color-btn");
+const sizeRange = document.getElementById("size-range");
+const sizeDisplay = document.getElementById("size-display");
 
 clearBtn.onclick = () => clearGrid();
 colorPicker.oninput = (e) => setCurrentColor(e.target.value);
 colorBtn.onclick = () => setCurrentmode("color");
 eraserBtn.onclick = () => setCurrentmode("eraser");
 randomColorBtn.onclick = () => setCurrentmode("random");
+sizeRange.onchange = (e) => updateSize(e.target.value);
+sizeRange.onmousemove = (e) => updateSizeDisplay(e.target.value);
 
 function setCurrentColor(newColor) {
   currentColor = newColor;
@@ -25,11 +31,15 @@ function setCurrentmode(newMode) {
   currentMode = newMode;
 }
 
-function setupGrid() {
-  grid.style.gridTemplateRows = "repeat(16, 1fr)";
-  grid.style.gridTemplateColumns = "repeat(16, 1fr)";
+function setCurrentSize(newSize) {
+  currentSize = newSize;
+}
 
-  for (let i = 0; i < 16 * 16; i++) {
+function setupGrid(size) {
+  grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+  grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+
+  for (let i = 0; i < `${size}` * `${size}`; i++) {
     const pixel = document.createElement("div");
     pixel.addEventListener("mouseover", changeColor);
     pixel.addEventListener("mousedown", changeColor);
@@ -37,6 +47,7 @@ function setupGrid() {
   }
 }
 
+// voir plus tard pour écran tactile
 let mouseDown = false;
 document.body.onmousedown = () => {
   mouseDown = true;
@@ -68,9 +79,18 @@ function changeColor(e) {
 
 function clearGrid() {
   grid.innerHTML = "";
-  setupGrid();
+  setupGrid(currentSize);
+}
+
+function updateSize(size) {
+  setCurrentSize(size);
+  clearGrid();
+}
+
+function updateSizeDisplay(size) {
+  sizeDisplay.innerHTML = `${size} x ${size}`;
 }
 
 window.onload = () => {
-  setupGrid();
+  setupGrid(DEFAULT_SIZE);
 };
