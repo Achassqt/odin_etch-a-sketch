@@ -1,9 +1,19 @@
 const DEFAULT_COLOR = "black";
 
+let currentColor = DEFAULT_COLOR;
+
 const grid = document.getElementById("grid");
 const clearBtn = document.getElementById("clear-btn");
+const colorPicker = document.getElementById("color-picker");
+const colorBtn = document.getElementById("color-btn");
+const eraserBtn = document.getElementById("eraser-btn");
 
 clearBtn.onclick = () => clearGrid();
+colorPicker.oninput = (e) => setCurrentColor(e.target.value);
+
+function setCurrentColor(newColor) {
+  currentColor = newColor;
+}
 
 function setupGrid() {
   grid.style.gridTemplateRows = "repeat(16, 1fr)";
@@ -28,7 +38,7 @@ document.body.onmouseup = () => {
 function changeColor(e) {
   if (e.type === "mouseover" && mouseDown === false) console.log(null);
   else {
-    e.target.style.backgroundColor = DEFAULT_COLOR;
+    e.target.style.backgroundColor = currentColor;
   }
 }
 
