@@ -1,6 +1,8 @@
 const DEFAULT_COLOR = "black";
+const DEFAULT_MODE = "color";
 
 let currentColor = DEFAULT_COLOR;
+let currentMode = DEFAULT_MODE;
 
 const grid = document.getElementById("grid");
 const clearBtn = document.getElementById("clear-btn");
@@ -10,9 +12,15 @@ const eraserBtn = document.getElementById("eraser-btn");
 
 clearBtn.onclick = () => clearGrid();
 colorPicker.oninput = (e) => setCurrentColor(e.target.value);
+colorBtn.onclick = () => setCurrentmode("color");
+eraserBtn.onclick = () => setCurrentmode("eraser");
 
 function setCurrentColor(newColor) {
   currentColor = newColor;
+}
+
+function setCurrentmode(newMode) {
+  currentMode = newMode;
 }
 
 function setupGrid() {
@@ -37,8 +45,10 @@ document.body.onmouseup = () => {
 
 function changeColor(e) {
   if (e.type === "mouseover" && mouseDown === false) console.log(null);
-  else {
+  else if (currentMode === "color") {
     e.target.style.backgroundColor = currentColor;
+  } else if (currentMode === "eraser") {
+    e.target.style.backgroundColor = "white";
   }
 }
 
