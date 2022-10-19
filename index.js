@@ -9,11 +9,13 @@ const clearBtn = document.getElementById("clear-btn");
 const colorPicker = document.getElementById("color-picker");
 const colorBtn = document.getElementById("color-btn");
 const eraserBtn = document.getElementById("eraser-btn");
+const randomColorBtn = document.getElementById("random_color-btn");
 
 clearBtn.onclick = () => clearGrid();
 colorPicker.oninput = (e) => setCurrentColor(e.target.value);
 colorBtn.onclick = () => setCurrentmode("color");
 eraserBtn.onclick = () => setCurrentmode("eraser");
+randomColorBtn.onclick = () => setCurrentmode("random");
 
 function setCurrentColor(newColor) {
   currentColor = newColor;
@@ -49,8 +51,20 @@ function changeColor(e) {
     e.target.style.backgroundColor = currentColor;
   } else if (currentMode === "eraser") {
     e.target.style.backgroundColor = "white";
+  } else if (currentMode === "random") {
+    // lien documentation en cas d'oublie https://www.educative.io/answers/how-to-generate-a-random-color-in-javascript
+
+    let maxVal = 0xffffff;
+    let randomNumber = Math.floor(Math.random() * maxVal).toString(16);
+    let randomColor = randomNumber.padStart(6, 0);
+    console.log(randomColor);
+    e.target.style.backgroundColor = `#${randomColor.toUpperCase()}`;
   }
 }
+
+// let test = 0.9999999999999999999999 * 16777215;
+// console.log(Math.floor(test).toString(16));
+// console.log(Math.random());
 
 function clearGrid() {
   grid.innerHTML = "";
