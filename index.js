@@ -14,6 +14,7 @@ const eraserBtn = document.getElementById("eraser-btn");
 const randomColorBtn = document.getElementById("random_color-btn");
 const sizeRange = document.getElementById("size-range");
 const sizeDisplay = document.getElementById("size-display");
+const pixelPreview = document.getElementById("pixel-preview");
 
 clearBtn.onclick = () => clearGrid();
 colorPicker.oninput = (e) => setCurrentColor(e.target.value);
@@ -22,6 +23,7 @@ eraserBtn.onclick = () => setCurrentmode("eraser");
 randomColorBtn.onclick = () => setCurrentmode("random");
 sizeRange.onchange = (e) => updateSize(e.target.value);
 sizeRange.onmousemove = (e) => updateSizeDisplay(e.target.value);
+sizeRange.onclick = (e) => updateSizeDisplay(e.target.value);
 
 function setCurrentColor(newColor) {
   currentColor = newColor;
@@ -43,7 +45,18 @@ function setupGrid(size) {
     const pixel = document.createElement("div");
     pixel.addEventListener("mouseover", changeColor);
     pixel.addEventListener("mousedown", changeColor);
+    pixel.addEventListener("touchmove", changeColorTouch);
     grid.appendChild(pixel);
+  }
+}
+
+function changeColorTouch(e) {
+  let target = document.elementFromPoint(
+    e.changedTouches[0].clientX,
+    e.changedTouches[0].clientY
+  );
+  if (grid.contains(target)) {
+    target.style.backgroundColor = currentColor;
   }
 }
 
@@ -57,7 +70,7 @@ document.body.onmouseup = () => {
 };
 
 function changeColor(e) {
-  if (e.type === "mouseover" && mouseDown === false) console.log(null);
+  if (e.type === "mouseover" && mouseDown === false) return;
   else if (currentMode === "color") {
     e.target.style.backgroundColor = currentColor;
   } else if (currentMode === "eraser") {
@@ -89,8 +102,12 @@ function updateSize(size) {
 
 function updateSizeDisplay(size) {
   sizeDisplay.innerHTML = `${size} x ${size}`;
+  pixelPreview.style.width = `calc(500px / ${size})`;
+  pixelPreview.style.height = `calc(500px / ${size})`;
 }
 
 window.onload = () => {
   setupGrid(DEFAULT_SIZE);
+  pixelPreview.style.width = `calc(500px / ${DEFAULT_SIZE})`;
+  pixelPreview.style.height = `calc(500px / ${DEFAULT_SIZE})`;
 };

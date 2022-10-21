@@ -16,3 +16,9 @@ body {
   box-shadow: 0px 0px 20px 1px #00000099;
   user-select: none;
 }
+
+.pixel-preview {
+  background-color: red;
+  /* height: 16px;
+  width: 16px; */
+}
