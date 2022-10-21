@@ -55,8 +55,12 @@ function changeColorTouch(e) {
     e.changedTouches[0].clientX,
     e.changedTouches[0].clientY
   );
-  if (grid.contains(target)) {
+  if (grid.contains(target) && currentMode === "color") {
     target.style.backgroundColor = currentColor;
+  } else if (grid.contains(target) && currentMode === "random") {
+    randomColor(e);
+  } else if (grid.contains(target) && currentMode === "eraser") {
+    target.style.backgroundColor = "white";
   }
 }
 
@@ -76,12 +80,23 @@ function changeColor(e) {
   } else if (currentMode === "eraser") {
     e.target.style.backgroundColor = "white";
   } else if (currentMode === "random") {
-    // lien documentation en cas d'oublie https://www.educative.io/answers/how-to-generate-a-random-color-in-javascript
+    randomColor(e);
+  }
+}
 
-    let maxVal = 0xffffff;
-    let randomNumber = Math.floor(Math.random() * maxVal).toString(16);
-    let randomColor = randomNumber.padStart(6, 0);
-    console.log(randomColor);
+function randomColor(e) {
+  // lien documentation en cas d'oublie https://www.educative.io/answers/how-to-generate-a-random-color-in-javascript
+
+  let maxVal = 0xffffff;
+  let randomNumber = Math.floor(Math.random() * maxVal).toString(16);
+  let randomColor = randomNumber.padStart(6, 0);
+  if (e.type === "touchmove") {
+    let target = document.elementFromPoint(
+      e.changedTouches[0].clientX,
+      e.changedTouches[0].clientY
+    );
+    target.style.backgroundColor = `#${randomColor.toUpperCase()}`;
+  } else {
     e.target.style.backgroundColor = `#${randomColor.toUpperCase()}`;
   }
 }
