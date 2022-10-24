@@ -2,7 +2,7 @@ body {
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: 100vh;
   background-color: rgb(170, 169, 169);
@@ -10,8 +10,8 @@ body {
 
 .grid {
   display: grid;
-  width: 500px;
-  height: 500px;
+  /* width: 500px;
+  height: 500px; */
   background-color: white;
   box-shadow: 0px 0px 20px 1px #00000099;
   user-select: none;

@@ -38,8 +38,10 @@ function setCurrentSize(newSize) {
 }
 
 function setupGrid(size) {
-  grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-  grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+  let pixelSize = Math.floor(500 / size) + 1;
+
+  grid.style.gridTemplateRows = `repeat(${size}, ${pixelSize}px)`;
+  grid.style.gridTemplateColumns = `repeat(${size}, ${pixelSize}px)`;
 
   for (let i = 0; i < `${size}` * `${size}`; i++) {
     const pixel = document.createElement("div");
@@ -120,6 +122,16 @@ function updateSizeDisplay(size) {
   pixelPreview.style.width = `calc(500px / ${size})`;
   pixelPreview.style.height = `calc(500px / ${size})`;
 }
+
+// const captureBtn = document.getElementById("capture-btn");
+
+// function capture() {
+//   html2canvas(grid).then(function (canvas) {
+//     document.getElementById("output").appendChild(canvas);
+//   });
+// }
+
+// captureBtn.addEventListener("click", capture);
 
 window.onload = () => {
   setupGrid(DEFAULT_SIZE);

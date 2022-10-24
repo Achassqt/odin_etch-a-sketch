@@ -20,6 +20,22 @@
       <input id="size-range" type="range" value="16" min="1" max="64" />
     </div>
     <div id="grid" class="grid"></div>
+    <button id="capture-btn" onclick="capture()">Capture</button>
+    <div id="output"></div>
   </body>
-  <script src="index.js"></script>
+  <script type="module" src="index.js"></script>
+  <!-- Include from the CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
+
+  <!-- Include locally otherwise -->
+  <!-- <script src='html2canvas.js'></script> -->
+  <script>
+    function capture() {
+      let grid = document.getElementById("grid");
+
+      html2canvas(grid).then(function (canvas) {
+        document.getElementById("output").appendChild(canvas);
+      });
+    }
+  </script>
 </html>
