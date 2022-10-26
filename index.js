@@ -18,9 +18,15 @@ const pixelPreview = document.getElementById("pixel-preview");
 
 clearBtn.onclick = () => clearGrid();
 colorPicker.oninput = (e) => setCurrentColor(e.target.value);
-colorBtn.onclick = () => setCurrentmode("color");
-eraserBtn.onclick = () => setCurrentmode("eraser");
-randomColorBtn.onclick = () => setCurrentmode("random");
+colorBtn.onclick = () => {
+  setCurrentmode("color");
+};
+eraserBtn.onclick = () => {
+  setCurrentmode("eraser");
+};
+randomColorBtn.onclick = () => {
+  setCurrentmode("random");
+};
 sizeRange.onchange = (e) => updateSize(e.target.value);
 sizeRange.onmousemove = (e) => updateSizeDisplay(e.target.value);
 sizeRange.onclick = (e) => updateSizeDisplay(e.target.value);
@@ -30,6 +36,7 @@ function setCurrentColor(newColor) {
 }
 
 function setCurrentmode(newMode) {
+  activateButton(newMode);
   currentMode = newMode;
 }
 
@@ -38,10 +45,13 @@ function setCurrentSize(newSize) {
 }
 
 function setupGrid(size) {
-  let pixelSize = Math.floor(500 / size) + 1;
+  // let pixelSize = Math.floor(500 / size) + 1;
 
-  grid.style.gridTemplateRows = `repeat(${size}, ${pixelSize}px)`;
-  grid.style.gridTemplateColumns = `repeat(${size}, ${pixelSize}px)`;
+  // grid.style.gridTemplateRows = `repeat(${size}, ${pixelSize}px)`;
+  // grid.style.gridTemplateColumns = `repeat(${size}, ${pixelSize}px)`;
+
+  grid.style.gridTemplateRows = `repeat(${size}, 1fr`;
+  grid.style.gridTemplateColumns = `repeat(${size}, 1fr`;
 
   for (let i = 0; i < `${size}` * `${size}`; i++) {
     const pixel = document.createElement("div");
@@ -113,28 +123,53 @@ function clearGrid() {
 }
 
 function updateSize(size) {
+  // capture();
   setCurrentSize(size);
   clearGrid();
 }
 
 function updateSizeDisplay(size) {
   sizeDisplay.innerHTML = `${size} x ${size}`;
-  pixelPreview.style.width = `calc(500px / ${size})`;
-  pixelPreview.style.height = `calc(500px / ${size})`;
+  // pixelPreview.style.width = `calc(500px / ${size})`;
+  // pixelPreview.style.height = `calc(500px / ${size})`;
 }
 
-// const captureBtn = document.getElementById("capture-btn");
+const captureBtn = document.getElementById("capture-btn");
 
-// function capture() {
-//   html2canvas(grid).then(function (canvas) {
-//     document.getElementById("output").appendChild(canvas);
-//   });
-// }
+captureBtn.addEventListener("click", capture);
 
-// captureBtn.addEventListener("click", capture);
+function capture() {
+  let grid = document.getElementById("grid");
+
+  html2canvas(grid).then(function (canvas) {
+    const output = document.getElementById("output");
+    canvas.style.height = "100px";
+    canvas.style.width = "100px";
+    output.appendChild(canvas);
+    output.scrollTop = output.scrollHeight;
+  });
+}
+
+function activateButton(newMode) {
+  if (currentMode === "random") {
+    randomColorBtn.classList.remove("active-btn");
+  } else if (currentMode === "color") {
+    colorBtn.classList.remove("active-btn");
+  } else if (currentMode === "eraser") {
+    eraserBtn.classList.remove("active-btn");
+  }
+
+  if (newMode === "random") {
+    randomColorBtn.classList.add("active-btn");
+  } else if (newMode === "color") {
+    colorBtn.classList.add("active-btn");
+  } else if (newMode === "eraser") {
+    eraserBtn.classList.add("active-btn");
+  }
+}
 
 window.onload = () => {
   setupGrid(DEFAULT_SIZE);
-  pixelPreview.style.width = `calc(500px / ${DEFAULT_SIZE})`;
-  pixelPreview.style.height = `calc(500px / ${DEFAULT_SIZE})`;
+  // pixelPreview.style.width = `calc(500px / ${DEFAULT_SIZE})`;
+  // pixelPreview.style.height = `calc(500px / ${DEFAULT_SIZE})`;
 };

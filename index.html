@@ -8,20 +8,34 @@
     <title>Document</title>
   </head>
   <body>
-    <div>
-      <input id="color-picker" type="color" value="#000000" />
-      <button id="color-btn">Mode Couleur</button>
-      <button id="random_color-btn">Mode Aléatoire</button>
-      <button id="eraser-btn">Gomme</button>
-      <button id="clear-btn">Effacer</button>
-      <div id="size-display">16 x 16</div>
-      <!-- ajouter preview pixel -->
-      <div id="pixel-preview" class="pixel-preview"></div>
-      <input id="size-range" type="range" value="16" min="1" max="64" />
-    </div>
-    <div id="grid" class="grid"></div>
-    <button id="capture-btn" onclick="capture()">Capture</button>
-    <div id="output"></div>
+    <main>
+      <section class="options-wrapper">
+        <div class="options">
+          <input id="color-picker" type="color" value="#000000" />
+          <div class="mode">
+            <button id="color-btn" class="active-btn">Mode Couleur</button>
+            <button id="random_color-btn">Mode Aléatoire</button>
+          </div>
+          <div class="clean-color">
+            <button id="eraser-btn">Gomme</button>
+            <button id="clear-btn">Effacer</button>
+          </div>
+          <div class="size">
+            <div id="size-display">16 x 16</div>
+            <!-- ajouter preview pixel -->
+            <!-- <div id="pixel-preview" class="pixel-preview"></div> -->
+            <input id="size-range" type="range" value="16" min="1" max="64" />
+          </div>
+        </div>
+      </section>
+      <div id="grid" class="grid"></div>
+      <section class="capture-wrapper">
+        <div class="capture">
+          <button id="capture-btn">Capture</button>
+          <div id="output"></div>
+        </div>
+      </section>
+    </main>
   </body>
   <script type="module" src="index.js"></script>
   <!-- Include from the CDN -->
@@ -29,13 +43,17 @@
 
   <!-- Include locally otherwise -->
   <!-- <script src='html2canvas.js'></script> -->
-  <script>
+  <!-- <script>
     function capture() {
       let grid = document.getElementById("grid");
 
       html2canvas(grid).then(function (canvas) {
-        document.getElementById("output").appendChild(canvas);
+        const output = document.getElementById("output");
+        canvas.style.height = "100px";
+        canvas.style.width = "100px";
+        output.appendChild(canvas);
+        output.scrollTop = output.scrollHeight;
       });
     }
-  </script>
+  </script> -->
 </html>
