@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>Document</title>
+    <!-- Include from the CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
   </head>
   <body>
     <main>
@@ -31,6 +33,10 @@
       <div id="grid" class="grid"></div>
       <section class="capture-wrapper">
         <div class="capture">
+          <div class="capture-info">
+            i
+            <span class="infobulle">Clique droit pour enregistrer l'image</span>
+          </div>
           <button id="capture-btn">Capture</button>
           <div id="output"></div>
         </div>
@@ -39,21 +45,5 @@
   </body>
   <script type="module" src="index.js"></script>
   <!-- Include from the CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
-
-  <!-- Include locally otherwise -->
-  <!-- <script src='html2canvas.js'></script> -->
-  <!-- <script>
-    function capture() {
-      let grid = document.getElementById("grid");
-
-      html2canvas(grid).then(function (canvas) {
-        const output = document.getElementById("output");
-        canvas.style.height = "100px";
-        canvas.style.width = "100px";
-        output.appendChild(canvas);
-        output.scrollTop = output.scrollHeight;
-      });
-    }
-  </script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script> -->
 </html>
