@@ -173,3 +173,13 @@ window.onload = () => {
   // pixelPreview.style.width = `calc(500px / ${DEFAULT_SIZE})`;
   // pixelPreview.style.height = `calc(500px / ${DEFAULT_SIZE})`;
 };
+
+const more = document.querySelector(".more");
+const x = document.querySelector(".x");
+const options = document.querySelector(".options-wrapper");
+more.onclick = () => {
+  options.style.transform = "translateX(0)";
+};
+x.onclick = () => {
+  options.style.transform = "translateX(-105%)";
+};
